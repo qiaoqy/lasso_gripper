@@ -6,5 +6,5 @@ This project is about the design of string shooting grasper
  2. The grasp planning algorithm for string loop.
 
 ## Time line
-ICRA 2025 deadline: Sept. 15, 2024
+ICRA 2025 deadline: Sept. 15, 2024  
 ![](https://2025.ieee-icra.org/wp-content/uploads/2024/04/ICRA-ATL-logo.png)

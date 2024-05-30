@@ -1,5 +1,5 @@
 # Dynamic principles
-The charmed string: self-supporting loops through air drag
+The charmed string: self-supporting loops through air drag  
 String Shooter’s overall shape in ambient air
 
 # Grasping algorithms
