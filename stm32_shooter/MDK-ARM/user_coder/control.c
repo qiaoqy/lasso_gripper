@@ -1,5 +1,5 @@
 ///////include///////
-#include "driver_crc.h"
+
 #include "control.h"
 
 /////////////////////
@@ -16,7 +16,7 @@ controlStruct_t* getcontrolData(){
 
 
 void wiredSendData(USART_TypeDef *USARTx){ 
-	uint8_t *array =  (uint8_t *)prvUSART_TO_ArrayTX(USARTx);
+	uint8_t array[64];
 	uint8_t index_ptr = 0;
 	uint8_t index = 0;
 	//Ö¡Í·£¬³¤¶È4£¬1kHz

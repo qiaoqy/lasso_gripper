@@ -219,7 +219,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
   if (huart->Instance == USART1)
   {
-		Lemon_data(EN_Data);
+		Lemon_data(EN_Data[0]);
 		HAL_UART_Receive_IT(&huart1,EN_Data,1); 
   }
   if (huart->Instance == USART2)

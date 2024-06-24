@@ -1,7 +1,7 @@
 #include "main.h"
 #include "stdint.h"
-#include "stm32f10x.h"
-
+#include "stm32f1xx_hal.h"
+#include "driver_crc.h"
 ////////////////////////////////////////
 #define MAIN_CONTROL_BEGIN				0x3F
 #define MAIN_CONTROL_ADDRESS			0x10
