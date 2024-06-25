@@ -108,23 +108,27 @@ int main(void)
 		switch (cmd_id) {
 			case 1:
 //				controlData.set_motor_flag = MODE_NULL;
-				controlData.control_mode = MODE_CURRENT;
-				controlData.set_cur.float_temp = 0.5f;
-				wiredSendData();
-				break;
+			controlData.control_mode = MODE_CURRENT;
+			controlData.set_cur.float_temp = 0.5f;
+			wiredSendData();
+			cmd_id =0;
+			break;
 			case 2:
 //				controlData.set_motor_flag = MODE_NULL;
-				controlData.control_mode = VELOCITY;
-				controlData.set_vel.float_temp = 1.0f;
-				wiredSendData();
+			controlData.control_mode = VELOCITY;
+			controlData.set_vel.float_temp = 1.0f;
+			wiredSendData();
+			cmd_id =0;
 			case 3:
 //				controlData.set_motor_flag = MODE_NULL;
-				controlData.control_mode = MODE_POSITION;
-				controlData.set_pos.float_temp = 0.75f;
-				wiredSendData();
+			controlData.control_mode = MODE_POSITION;
+			controlData.set_pos.float_temp = 0.75f;
+			wiredSendData();
+			cmd_id =0;
 				break;
 			case 4:
-				controlData.set_motor_flag = MODE_NULL;
+			controlData.set_motor_flag = MODE_NULL;
+			cmd_id =0;
 			}
 			
   }

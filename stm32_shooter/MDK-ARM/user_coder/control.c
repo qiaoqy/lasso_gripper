@@ -89,7 +89,7 @@ void wiredSendData(void){
 	array[2] = index_ptr + 2;
 	Append_CRC8_Check_Sum(array, 4);
 	Append_CRC16_Check_Sum(array, array[2]);
-	HAL_UART_Transmit_IT(&huart1, array, sizeof(array));
+	HAL_UART_Transmit_DMA(&huart1, array, sizeof(array));
 }
 //¶ÁÈ¡ÄûÃÊFOCÓÊÆ±¿×Êı¾İ
 static void LevelFocDataRead(uint8_t *array){
