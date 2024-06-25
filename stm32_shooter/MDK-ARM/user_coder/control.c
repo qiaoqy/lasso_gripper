@@ -15,7 +15,7 @@ controlStruct_t* getcontrolData(){
 
 
 
-void wiredSendData(USART_TypeDef *USARTx){ 
+void wiredSendData(void){ 
 	uint8_t array[64];
 	uint8_t index_ptr = 0;
 	uint8_t index = 0;
@@ -165,24 +165,19 @@ static void LevelFocDataRead(uint8_t *array){
 	
 	
 }//主机读取从机发过来的数据
-uint8_t rx_data[48];
-uint8_t rx_data_count =0;
-void Lemon_data (uint8_t Data){
-	rx_data[rx_data_count] = Data;
-	rx_data_count++;
-	if (rx_data_count >49)
-	{
-		if(rx_data[0] == LEVEL_FOC_BEGIN && (rx_data[1] & LEVEL_FOC_ADDRESS) )
+
+void Lemon_data (uint8_t *Data){
+
+		if(Data[0] == LEVEL_FOC_BEGIN && (Data[1] & LEVEL_FOC_ADDRESS) )
 			{
-				if(!Verify_CRC8_Check_Sum(rx_data, 4) && !Verify_CRC16_Check_Sum(rx_data, rx_data[2])){					
+				if(!Verify_CRC8_Check_Sum(Data, 4) && !Verify_CRC16_Check_Sum(Data, Data[2])){					
 					// 校验失败则不导入数据
 					//暂时不进行操作
 				}
 				else{
 					//读取水平电机数据
-					rx_data_count = 0;
-					LevelFocDataRead(rx_data);
+//					rx_data_count = 0;
+					LevelFocDataRead(Data);
 				}
 			}
-	}
 };

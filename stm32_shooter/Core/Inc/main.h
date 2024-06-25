@@ -93,7 +93,6 @@ typedef __I uint16_t vuc16;
 typedef __I uint8_t vuc8;
  
 /* USER CODE END Private defines */
-/* USER CODE END Private defines */
 
 #ifdef __cplusplus
 }

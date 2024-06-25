@@ -92,4 +92,5 @@ typedef struct {
 } controlStruct_t;	
 ////////////////////////////////////////////////////
 
-void Lemon_data (uint8_t Data);
+void Lemon_data (uint8_t *Data);
+void wiredSendData(void);

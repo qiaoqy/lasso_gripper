@@ -18,13 +18,14 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "dma.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "control.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -34,7 +35,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+extern controlStruct_t controlData;
+	uint8_t en_data[1];
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -45,7 +47,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+	int cmd_id = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -88,10 +90,12 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_TIM1_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
+	HAL_UART_Receive_DMA(&huart1,en_data,sizeof(en_data));
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -101,6 +105,28 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+		switch (cmd_id) {
+			case 1:
+//				controlData.set_motor_flag = MODE_NULL;
+				controlData.control_mode = MODE_CURRENT;
+				controlData.set_cur.float_temp = 0.5f;
+				wiredSendData();
+				break;
+			case 2:
+//				controlData.set_motor_flag = MODE_NULL;
+				controlData.control_mode = VELOCITY;
+				controlData.set_vel.float_temp = 1.0f;
+				wiredSendData();
+			case 3:
+//				controlData.set_motor_flag = MODE_NULL;
+				controlData.control_mode = MODE_POSITION;
+				controlData.set_pos.float_temp = 0.75f;
+				wiredSendData();
+				break;
+			case 4:
+				controlData.set_motor_flag = MODE_NULL;
+			}
+			
   }
   /* USER CODE END 3 */
 }
