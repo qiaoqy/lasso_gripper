@@ -94,3 +94,4 @@ typedef struct {
 
 void Lemon_data (uint8_t *Data);
 void wiredSendData(void);
+void congtrolGlobalInit(void);
