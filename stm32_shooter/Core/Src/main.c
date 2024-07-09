@@ -26,6 +26,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "control.h"
+#include "dji_shoot.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -35,9 +36,9 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-extern controlStruct_t controlData;
-	uint8_t en_data[1];
-	float temp = 0.0;
+	extern controlStruct_t controlData;
+	uint8_t en_data_1[1];
+	uint8_t en_data_2[1];
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -92,11 +93,33 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
-  MX_TIM1_Init();
   MX_USART1_UART_Init();
+  MX_TIM2_Init();
+  MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
+/////////////foc initalize//////////////////
 	congtrolGlobalInit();
-	HAL_UART_Receive_DMA(&huart1,en_data,sizeof(en_data));
+	controlData.control_mode = MODE_CURRENT_RAMP;
+	
+/////////////////serial port initalize///////////
+	HAL_UART_Receive_DMA(&huart1,en_data_1,sizeof(en_data_1));
+	HAL_UART_Receive_DMA(&huart1,en_data_2,sizeof(en_data_2));
+	
+	
+////////////////motor initalize/////////////////
+	HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_1);
+	HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_2);
+	HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_3);
+	HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_4);
+	__HAL_TIM_SetCompare(&htim2,TIM_CHANNEL_1, 150);
+	__HAL_TIM_SetCompare(&htim2,TIM_CHANNEL_2, 150);
+	__HAL_TIM_SetCompare(&htim2,TIM_CHANNEL_3, 150);
+	__HAL_TIM_SetCompare(&htim2,TIM_CHANNEL_4, 150);
+	HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_1);
+	HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_2);
+	HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_3);
+	HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_4);
+	
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -104,38 +127,15 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+	if (cmd_id == 1)
+	{
+		shooter_recycle();
+	cmd_id = 0;}
+	if (cmd_id == 2)
+	{
+		shooter_launch();
+	cmd_id = 0;	}
     /* USER CODE BEGIN 3 */
-//		switch (cmd_id) {
-//			case 1:
-////				controlData.set_motor_flag = MODE_NULL;
-//			controlData.control_mode = MODE_CURRENT;
-//			controlData.set_cur.float_temp = 0.5f;
-//			wiredSendData();
-//			cmd_id =0;
-//			break;
-//			case 2:
-////				controlData.set_motor_flag = MODE_NULL;
-//			controlData.control_mode = VELOCITY;
-//			controlData.set_vel.float_temp = 1.0f;
-//			wiredSendData();
-//			cmd_id =0;
-//			case 3:
-////				controlData.set_motor_flag = MODE_NULL;
-//			controlData.control_mode = MODE_POSITION;
-//			controlData.set_pos.float_temp = 0.75f;
-//			wiredSendData();
-//			cmd_id =0;
-//				break;
-//			case 4:
-//			controlData.set_motor_flag = MODE_NULL;
-//			cmd_id =0;
-//			}
-//			controlData.set_cur.float_temp = temp;
-			wiredSendData();
-			HAL_Delay(300);
-			
-			
   }
   /* USER CODE END 3 */
 }

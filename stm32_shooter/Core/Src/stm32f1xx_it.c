@@ -23,6 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "control.h"
+#include "dji_shoot.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -58,6 +59,7 @@ extern UART_HandleTypeDef huart1;
 /* External variables --------------------------------------------------------*/
 extern DMA_HandleTypeDef hdma_usart1_rx;
 extern DMA_HandleTypeDef hdma_usart1_tx;
+extern DMA_HandleTypeDef hdma_usart2_rx;
 extern UART_HandleTypeDef huart1;
 /* USER CODE BEGIN EV */
 
@@ -230,6 +232,20 @@ void DMA1_Channel5_IRQHandler(void)
 }
 
 /**
+  * @brief This function handles DMA1 channel6 global interrupt.
+  */
+void DMA1_Channel6_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA1_Channel6_IRQn 0 */
+
+  /* USER CODE END DMA1_Channel6_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_usart2_rx);
+  /* USER CODE BEGIN DMA1_Channel6_IRQn 1 */
+
+  /* USER CODE END DMA1_Channel6_IRQn 1 */
+}
+
+/**
   * @brief This function handles USART1 global interrupt.
   */
 void USART1_IRQHandler(void)
@@ -244,11 +260,18 @@ void USART1_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
-extern uint8_t en_data[1];
+extern	uint8_t en_data_1[1];
 #define USART1_RX_BUFF_SIZE 108
-uint8_t USART1_RX_BUF[USART1_RX_BUFF_SIZE]; 		/* 接收缓冲区 */
-volatile uint32_t USART1_rx_idx;   //接收缓冲数组的游标
-volatile uint32_t USART1_rx_len;   //实时记录当前接收的数据的长度
+uint8_t USART1_RX_BUF[USART1_RX_BUFF_SIZE]; 	
+volatile uint32_t USART1_rx_idx;
+volatile uint32_t USART1_rx_len;
+
+
+extern	uint8_t en_data_2[1];
+#define USART2_RX_BUFF_SIZE 5
+uint8_t USART2_RX_BUF[USART2_RX_BUFF_SIZE];
+volatile uint32_t USART2_rx_idx;
+volatile uint32_t USART2_rx_len; 
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
@@ -256,7 +279,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
   {
 		if(USART1_rx_len<USART1_RX_BUFF_SIZE)
 		{
-			USART1_RX_BUF[USART1_rx_len] = en_data[0];
+			USART1_RX_BUF[USART1_rx_len] = en_data_1[0];
 			Lemon_data(USART1_RX_BUF);
 			USART1_rx_len++;
 		}
@@ -265,12 +288,21 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 			USART1_rx_len = 0;
 			USART1_rx_idx = 0;
 		}
-//		HAL_UART_Receive_DMA(&huart1,en_data,1);
 	}
-//  if (huart->Instance == USART2)
-//  {
-
-//  }
+  if (huart->Instance == USART2)
+  {
+			if(USART1_rx_len<USART2_RX_BUFF_SIZE)
+		{
+			USART1_RX_BUF[USART2_rx_len] = en_data_2[0];
+			pc_receive(USART2_RX_BUF);
+			USART1_rx_len++;
+		}
+		else
+		{
+			USART1_rx_len = 0;
+			USART1_rx_idx = 0;
+		}
+  }
 }
 
 /* USER CODE END 1 */

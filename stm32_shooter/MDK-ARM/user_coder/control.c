@@ -19,7 +19,7 @@ void wiredSendData(void){
 	uint8_t tx_array[23];
 //	uint8_t index_ptr = 0;
 //	uint8_t index = 0;
-	//Ö¡Í·£¬³¤¶È4£¬1kHz
+	//å¸§å¤´ï¼Œé•¿åº¦4ï¼Œ1kHz
 	tx_array[index_ptr++] = MAIN_CONTROL_BEGIN;
 	tx_array[index_ptr++] = MAIN_CONTROL_ADDRESS;
 	tx_array[index_ptr++] = 0x00;
@@ -48,13 +48,13 @@ void wiredSendData(void){
 		tx_array[index_ptr++] = getcontrolData()->current_limit.u8_temp[index];
 	}			
 	
-	//ÏÔÊ¾µ±Ç°Ê¹ÓÃµÄ¿ØÖÆÄ£Ê½
+	//æ˜¾ç¤ºå½“å‰ä½¿ç”¨çš„æ§åˆ¶æ¨¡å¼
 	switch(getcontrolData()->control_mode){
 		
 		case MODE_CURRENT:
 		case MODE_CURRENT_RAMP:
  
-			//32Î»Êı¾İ£¬´®¿ÚÖ»ÄÜ·¢8Î»Êı¾İ£¬¹Ê½øĞĞËÄ´ÎforÑ­»·
+			//32ä½æ•°æ®ï¼Œä¸²å£åªèƒ½å‘8ä½æ•°æ®ï¼Œæ•…è¿›è¡Œå››æ¬¡forå¾ªç¯
 			for(int index = 0; index < 4; index++){ 
 				tx_array[index_ptr++] = getcontrolData()->set_cur.u8_temp[index];
 			}			
@@ -64,7 +64,7 @@ void wiredSendData(void){
 		case VELOCITY:
 		case VELOCITY_RAMP:
  
-				//32Î»Êı¾İ£¬´®¿ÚÖ»ÄÜ·¢8Î»Êı¾İ£¬¹Ê½øĞĞËÄ´ÎforÑ­»·
+				//32ä½æ•°æ®ï¼Œä¸²å£åªèƒ½å‘8ä½æ•°æ®ï¼Œæ•…è¿›è¡Œå››æ¬¡forå¾ªç¯
 				for(int index = 0; index < 4; index++){ 
 					tx_array[index_ptr++] = getcontrolData()->set_vel.u8_temp[index];
 				}	
@@ -74,7 +74,7 @@ void wiredSendData(void){
 		case MODE_POSITION:
 		case MODE_POSITION_TRAP:
  
-				//32Î»Êı¾İ£¬´®¿ÚÖ»ÄÜ·¢8Î»Êı¾İ£¬¹Ê½øĞĞËÄ´ÎforÑ­»·
+				//32ä½æ•°æ®ï¼Œä¸²å£åªèƒ½å‘8ä½æ•°æ®ï¼Œæ•…è¿›è¡Œå››æ¬¡forå¾ªç¯
 				for(int index = 0; index < 4; index++){ 
 					tx_array[index_ptr++] = getcontrolData()->set_pos.u8_temp[index];
 				}			
@@ -85,7 +85,7 @@ void wiredSendData(void){
 		default:break;
 		} 
 	
-	//Ìî×°Ğ£ÑéÎ»
+	//å¡«è£…æ ¡éªŒä½
 	tx_array[2] = 0x17;
 	Append_CRC8_Check_Sum(tx_array, 4);
 	Append_CRC16_Check_Sum(tx_array, tx_array[2]);
@@ -95,91 +95,91 @@ void wiredSendData(void){
 		tx_array[i] = 0;
 	};
 }
-//¶ÁÈ¡ÄûÃÊFOCÓÊÆ±¿×Êı¾İ
+//è¯»å–æŸ æª¬FOCé‚®ç¥¨å­”æ•°æ®
 static void LevelFocDataRead(uint8_t *rx_array){
 	uint8_t index_ptr = 4;
 	uint8_t index = 0;
 	
-	//µÚËÄÎ» ´íÎóĞÅÏ¢
+	//ç¬¬å››ä½ é”™è¯¯ä¿¡æ¯
 	LevelSensorData.mErrorCode = rx_array[index_ptr++];
 	
-	//µÚÎåÎ» µç»ú¿ØÖÆÄ£Ê½	
+	//ç¬¬äº”ä½ ç”µæœºæ§åˆ¶æ¨¡å¼	
 	/*
-	MODE_CURRENT		= 1,//µçÁ÷¿ØÖÆÄ£Ê½¡ª¡ªÖ±½Ó¿ØÖÆ
-	MODE_CURRENT_RAMP	= 2,//µçÁ÷¿ØÖÆÄ£Ê½¡ª¡ªÌİĞÎ
-	VELOCITY		= 3,//ËÙ¶È¿ØÖÆÄ£Ê½¡ª¡ªÖ±½Ó¿ØÖÆ
-	VELOCITY_RAMP	= 4,//ËÙ¶È¿ØÖÆÄ£Ê½¡ª¡ªÌİĞÎ
-	MODE_POSITION		= 5,//Î»ÖÃ¿ØÖÆÄ£Ê½¡ª¡ªÖ±½Ó¿ØÖÆ
-	MODE_POSITION_TRAP	= 6,//Î»ÖÃ¿ØÖÆÄ£Ê½¡ª¡ªÌİĞÎ
+	MODE_CURRENT		= 1,//ç”µæµæ§åˆ¶æ¨¡å¼â€”â€”ç›´æ¥æ§åˆ¶
+	MODE_CURRENT_RAMP	= 2,//ç”µæµæ§åˆ¶æ¨¡å¼â€”â€”æ¢¯å½¢
+	VELOCITY		= 3,//é€Ÿåº¦æ§åˆ¶æ¨¡å¼â€”â€”ç›´æ¥æ§åˆ¶
+	VELOCITY_RAMP	= 4,//é€Ÿåº¦æ§åˆ¶æ¨¡å¼â€”â€”æ¢¯å½¢
+	MODE_POSITION		= 5,//ä½ç½®æ§åˆ¶æ¨¡å¼â€”â€”ç›´æ¥æ§åˆ¶
+	MODE_POSITION_TRAP	= 6,//ä½ç½®æ§åˆ¶æ¨¡å¼â€”â€”æ¢¯å½¢
 	*/
 
 	LevelSensorData.control_mode = rx_array[index_ptr++];
 	
-	//µÚÁùÎ» µç»ú×´Ì¬
-	// CONTROL_MODE_RELAX	= 0 Ê§ÄÜ
-	// CONTROL_MODE_CLOSE	= 1 ±Õ»·
-	// CONTROL_MODE_CAIL	= 2 Ğ£×¼
-	// CONTROL_MODE_ANTI	= 3 ¿¹³İ²Û¾àĞ£×¼
+	//ç¬¬å…­ä½ ç”µæœºçŠ¶æ€
+	// CONTROL_MODE_RELAX	= 0 å¤±èƒ½
+	// CONTROL_MODE_CLOSE	= 1 é—­ç¯
+	// CONTROL_MODE_CAIL	= 2 æ ¡å‡†
+	// CONTROL_MODE_ANTI	= 3 æŠ—é½¿æ§½è·æ ¡å‡†
 	LevelSensorData.motor_mode = rx_array[index_ptr++]; 
 	
-		//µÚÆßÎ» -> µÚÊ®Î» µçÑ¹Öµ
+		//ç¬¬ä¸ƒä½ -> ç¬¬åä½ ç”µå‹å€¼
 	for(index=0;index < 4;index++)
 		LevelSensorData.Vbus_Cur.u8_temp[index] = rx_array[index_ptr++];	
 	
-	//µÚÊ®Ò»Î» -> µÚÊ®ËÄÎ» Êµ¼ÊµçÁ÷
+	//ç¬¬åä¸€ä½ -> ç¬¬åå››ä½ å®é™…ç”µæµ
 	for(index=0;index < 4;index++)
 		LevelSensorData.cur_estimate_.u8_temp[index] = rx_array[index_ptr++];	
 
-	//µÚÊ®ÎåÎ» -> µÚÊ®°ËÎ» Êµ¼ÊÎ»ÖÃ
+	//ç¬¬åäº”ä½ -> ç¬¬åå…«ä½ å®é™…ä½ç½®
 	for(index=0;index < 4;index++)
 		LevelSensorData.pos_estimate_.u8_temp[index] = rx_array[index_ptr++];	
 	
-	//µÚÊ®¾ÅÎ» -> µÚ¶şÊ®¶şÎ» Êµ¼ÊËÙ¶È
+	//ç¬¬åä¹ä½ -> ç¬¬äºŒåäºŒä½ å®é™…é€Ÿåº¦
 	for(index=0;index < 4;index++)
 		LevelSensorData.vel_estimate_.u8_temp[index] = rx_array[index_ptr++];		
 	
-	//µÚ¶şÊ®ÈıÎ» -> µÚ¶şÊ®ÁùÎ» µçÁ÷ÏŞÖÆ
+	//ç¬¬äºŒåä¸‰ä½ -> ç¬¬äºŒåå…­ä½ ç”µæµé™åˆ¶
 	for(index=0;index < 4;index++)
 		LevelSensorData.current_limit.u8_temp[index] = rx_array[index_ptr++];	
 	
-	//µÚ¶şÊ®ÆßÎ» -> µÚÈıÊ®Î» ËÙ¶ÈÏŞÖÆ
+	//ç¬¬äºŒåä¸ƒä½ -> ç¬¬ä¸‰åä½ é€Ÿåº¦é™åˆ¶
 	for(index=0;index < 4;index++)
 		LevelSensorData.vel_limit.u8_temp[index] = rx_array[index_ptr++];		
 	
-	//µÚÈıÊ®Ò»Î» -> µÚÈıÊ®ËÄÎ» ±àÂëÆ÷cpr¾ø¶ÔÖµ (µ¥È¦£º0-16384)
+	//ç¬¬ä¸‰åä¸€ä½ -> ç¬¬ä¸‰åå››ä½ ç¼–ç å™¨cprç»å¯¹å€¼ (å•åœˆï¼š0-16384)
 	for(index=0;index < 4;index++)
 		LevelSensorData.count_in_cpr_.u8_temp[index] = rx_array[index_ptr++];		
 	
-	//µÚÈıÊ®ÎåÎ» -> µÚÈıÊ®°ËÎ» µç»úµç×è
+	//ç¬¬ä¸‰åäº”ä½ -> ç¬¬ä¸‰åå…«ä½ ç”µæœºç”µé˜»
 	for(index = 0; index < 4; index++)
 		LevelSensorData.motor_phase_resistance.u8_temp[index] = rx_array[index_ptr++];			
 
-	//µÚÈıÊ®¾ÅÎ» -> µÚËÄÊ®¶şÎ» µç»úµç¸Ğ
+	//ç¬¬ä¸‰åä¹ä½ -> ç¬¬å››åäºŒä½ ç”µæœºç”µæ„Ÿ
 	for(index = 0; index < 4; index++)
 		LevelSensorData.motor_phase_inductance.u8_temp[index] = rx_array[index_ptr++];			
 	
-	//µÚËÄÊ®ÈıÎ» ²ÎÊı±£´æµÄflag
+	//ç¬¬å››åä¸‰ä½ å‚æ•°ä¿å­˜çš„flag
 	LevelSensorData.save_config_flag =  rx_array[index_ptr++];		
 	
-	//µÚËÄÊ®ËÄÎ» Ê¹ÓÃµçÁ÷/ËÙ¶ÈÏŞÖÆµÄflag
+	//ç¬¬å››åå››ä½ ä½¿ç”¨ç”µæµ/é€Ÿåº¦é™åˆ¶çš„flag
 	LevelSensorData.set_vel_cur_limit_flag = rx_array[index_ptr++];	
 	
-	//µÚËÄÊ®ÎåÎ» Çå³ıµç»ú´íÎóµÄflag
+	//ç¬¬å››åäº”ä½ æ¸…é™¤ç”µæœºé”™è¯¯çš„flag
 	LevelSensorData.clear_error_flag = rx_array[index_ptr++];		
 	
 	
-}//Ö÷»ú¶ÁÈ¡´Ó»ú·¢¹ıÀ´µÄÊı¾İ
+}//ä¸»æœºè¯»å–ä»æœºå‘è¿‡æ¥çš„æ•°æ®
 
 void Lemon_data (uint8_t *Data){
 
 		if(Data[0] == LEVEL_FOC_BEGIN && (Data[1] & LEVEL_FOC_ADDRESS) )
 			{
 				if(!Verify_CRC8_Check_Sum(Data, 4) && !Verify_CRC16_Check_Sum(Data, Data[2])){					
-					// Ğ£ÑéÊ§°ÜÔò²»µ¼ÈëÊı¾İ
-					//ÔİÊ±²»½øĞĞ²Ù×÷
+					// æ ¡éªŒå¤±è´¥åˆ™ä¸å¯¼å…¥æ•°æ®
+					//æš‚æ—¶ä¸è¿›è¡Œæ“ä½œ
 				}
 				else{
-					//¶ÁÈ¡Ë®Æ½µç»úÊı¾İ
+					//è¯»å–æ°´å¹³ç”µæœºæ•°æ®
 //					rx_data_count = 0;
 					LevelFocDataRead(Data);
 				}
@@ -188,52 +188,52 @@ void Lemon_data (uint8_t *Data){
 void congtrolGlobalInit(void){
     
  
-	//¿ØÖÆ³õÊ¼»¯
-	//±£´æµç»ú²ÎÊıflag
+	//æ§åˆ¶åˆå§‹åŒ–
+	//ä¿å­˜ç”µæœºå‚æ•°flag
 	controlData.save_config_flag = 0;
 	
-	//±£´æµç»ú²ÎÊıflag	
+	//ä¿å­˜ç”µæœºå‚æ•°flag	
 	controlData.clear_error_flag = 0;
 	
-	//ÉèÖÃÄ¿±êµçÁ÷
+	//è®¾ç½®ç›®æ ‡ç”µæµ
 	controlData.set_cur.float_temp = 0.0f;
 	
-	//ÉèÖÃÄ¿±êÎ»ÖÃ	
+	//è®¾ç½®ç›®æ ‡ä½ç½®	
 	controlData.set_pos.float_temp = 0.0f;
 	
-	//ÉèÖÃÄ¿±êËÙ¶È
+	//è®¾ç½®ç›®æ ‡é€Ÿåº¦
 	controlData.set_vel.float_temp = 0.0f;
 		
-	//ÉèÖÃµç»úËÙ¶ÈÏŞÖÆ
+	//è®¾ç½®ç”µæœºé€Ÿåº¦é™åˆ¶
 	controlData.vel_limit.float_temp = 30.0f;
 	
-	//ÉèÖÃµç»úµçÁ÷ÏŞÖÆ
+	//è®¾ç½®ç”µæœºç”µæµé™åˆ¶
 	controlData.current_limit.float_temp = 1.2f;	
 	
-	//µÚÎåÎ» µç»ú¿ØÖÆÄ£Ê½	
+	//ç¬¬äº”ä½ ç”µæœºæ§åˆ¶æ¨¡å¼	
 	/*
-	MODE_CURRENT		= 1,//µçÁ÷¿ØÖÆÄ£Ê½¡ª¡ªÖ±½Ó¿ØÖÆ
-	MODE_CURRENT_RAMP	= 2,//µçÁ÷¿ØÖÆÄ£Ê½¡ª¡ªÌİĞÎ
-	VELOCITY		= 3,//ËÙ¶È¿ØÖÆÄ£Ê½¡ª¡ªÖ±½Ó¿ØÖÆ
-	VELOCITY_RAMP	= 4,//ËÙ¶È¿ØÖÆÄ£Ê½¡ª¡ªÌİĞÎ
-	MODE_POSITION		= 5,//Î»ÖÃ¿ØÖÆÄ£Ê½¡ª¡ªÖ±½Ó¿ØÖÆ
-	MODE_POSITION_TRAP	= 6,//Î»ÖÃ¿ØÖÆÄ£Ê½¡ª¡ªÌİĞÎ
+	MODE_CURRENT		= 1,//ç”µæµæ§åˆ¶æ¨¡å¼â€”â€”ç›´æ¥æ§åˆ¶
+	MODE_CURRENT_RAMP	= 2,//ç”µæµæ§åˆ¶æ¨¡å¼â€”â€”æ¢¯å½¢
+	VELOCITY		= 3,//é€Ÿåº¦æ§åˆ¶æ¨¡å¼â€”â€”ç›´æ¥æ§åˆ¶
+	VELOCITY_RAMP	= 4,//é€Ÿåº¦æ§åˆ¶æ¨¡å¼â€”â€”æ¢¯å½¢
+	MODE_POSITION		= 5,//ä½ç½®æ§åˆ¶æ¨¡å¼â€”â€”ç›´æ¥æ§åˆ¶
+	MODE_POSITION_TRAP	= 6,//ä½ç½®æ§åˆ¶æ¨¡å¼â€”â€”æ¢¯å½¢
 	*/
 	controlData.control_mode = MODE_CURRENT;
 	
-	//ÉèÖÃµç»ú×´Ì¬
+	//è®¾ç½®ç”µæœºçŠ¶æ€
 	/*
-	MODE_NULL	= 0x1A,  //ÎŞ×´Ì¬
-	MODE_RELAX	= 0x1B,  //Ê§ÄÜ
-	MODE_CLOSE = 0x6D,   //±Õ»·
-	MODE_CALL = 0x63,   //Ğ£×¼	
+	MODE_NULL	= 0x1A,  //æ— çŠ¶æ€
+	MODE_RELAX	= 0x1B,  //å¤±èƒ½
+	MODE_CLOSE = 0x6D,   //é—­ç¯
+	MODE_CALL = 0x63,   //æ ¡å‡†	
 	
-	MODE_NULL ÎŞ×´Ì¬µÄÇé¿öÏÂ²Å¿ÉÒÔÉèÖÃµç»ú¸÷ÖÖ²ÎÊı£¬±ÈÈç±£´æµç»ú²ÎÊı
+	MODE_NULL æ— çŠ¶æ€çš„æƒ…å†µä¸‹æ‰å¯ä»¥è®¾ç½®ç”µæœºå„ç§å‚æ•°ï¼Œæ¯”å¦‚ä¿å­˜ç”µæœºå‚æ•°
 	*/
 	
 	controlData.set_motor_flag = MODE_NULL;
 
-	//ÉèÖÃµç»úµÄËÙ¶È/µçÁ÷ÏŞÖÆflag
+	//è®¾ç½®ç”µæœºçš„é€Ÿåº¦/ç”µæµé™åˆ¶flag
 	controlData.set_vel_cur_limit_flag = 0;	
 	
 	wiredSendData();

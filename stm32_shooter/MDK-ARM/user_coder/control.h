@@ -11,31 +11,31 @@
 ///////////////////////////////////////
 
 ///////////////////////////////////////////
-//µç»ú¿ØÖÆ×´Ì¬
+//ç”µæœºæ§åˆ¶çŠ¶æ€
 typedef enum {
 	
-	MODE_NULL	= 0x1A,  //ÎŞ×´Ì¬
-	MODE_RELAX	= 0x1B,  //Ê§ÄÜ
-	MODE_CLOSE = 0x6D,   //±Õ»·
-	MODE_CALL = 0x63,   //Ğ£×¼
+	MODE_NULL	= 0x1A,  //æ— çŠ¶æ€
+	MODE_RELAX	= 0x1B,  //å¤±èƒ½
+	MODE_CLOSE = 0x6D,   //é—­ç¯
+	MODE_CALL = 0x63,   //æ ¡å‡†
 			
 }AxisStateStruct_t;
 
-//µç»ú¿ØÖÆÄ£Ê½
+//ç”µæœºæ§åˆ¶æ¨¡å¼
 typedef enum {
 
-	MODE_CURRENT		= 1,//µçÁ÷¿ØÖÆÄ£Ê½¡ª¡ªÖ±½Ó¿ØÖÆ
-	MODE_CURRENT_RAMP	= 2,//µçÁ÷¿ØÖÆÄ£Ê½¡ª¡ªÌİĞÎ
-	VELOCITY		= 3,//ËÙ¶È¿ØÖÆÄ£Ê½¡ª¡ªÖ±½Ó¿ØÖÆ
-	VELOCITY_RAMP	= 4,//ËÙ¶È¿ØÖÆÄ£Ê½¡ª¡ªÌİĞÎ
-	MODE_POSITION		= 5,//Î»ÖÃ¿ØÖÆÄ£Ê½¡ª¡ªÖ±½Ó¿ØÖÆ
-	MODE_POSITION_TRAP	= 6,//Î»ÖÃ¿ØÖÆÄ£Ê½¡ª¡ªÌİĞÎ
+	MODE_CURRENT		= 1,//ç”µæµæ§åˆ¶æ¨¡å¼â€”â€”ç›´æ¥æ§åˆ¶
+	MODE_CURRENT_RAMP	= 2,//ç”µæµæ§åˆ¶æ¨¡å¼â€”â€”æ¢¯å½¢
+	VELOCITY		= 3,//é€Ÿåº¦æ§åˆ¶æ¨¡å¼â€”â€”ç›´æ¥æ§åˆ¶
+	VELOCITY_RAMP	= 4,//é€Ÿåº¦æ§åˆ¶æ¨¡å¼â€”â€”æ¢¯å½¢
+	MODE_POSITION		= 5,//ä½ç½®æ§åˆ¶æ¨¡å¼â€”â€”ç›´æ¥æ§åˆ¶
+	MODE_POSITION_TRAP	= 6,//ä½ç½®æ§åˆ¶æ¨¡å¼â€”â€”æ¢¯å½¢
 			
 }ControlModeStruct_t;
 
 
 
-//ÁªºÏÌåÓÃÓÚ×ª»»Êı¾İ
+//è”åˆä½“ç”¨äºè½¬æ¢æ•°æ®
 typedef union{
 	u8 		u8_temp[4];
 	float float_temp;
@@ -75,19 +75,19 @@ typedef struct{
 } LevelSensorStruct_t;
 
 typedef struct {
-	uint8_t dataInitFlag; //Ã»ÓÃµ½
-	uint32_t loops; //Ã»ÓÃµ½
+	uint8_t dataInitFlag; //æ²¡ç”¨åˆ°
+	uint32_t loops; //æ²¡ç”¨åˆ°
 	
-	uint8_t	save_config_flag; //±£´æµç»ú²ÎÊı±êÖ¾Î»
-	uint8_t	clear_error_flag;	//Çå³ıµç»ú´íÎó±êÖ¾Î»
-	AxisStateStruct_t	set_motor_flag; //ÉèÖÃµç»ú×´Ì¬
-	ControlModeStruct_t control_mode;	//µç»ú¿ØÖÆÄ£Ê½	
-	formatTrans32Struct_t set_pos;	//ÉèÖÃµç»úÎ»ÖÃ
-	formatTrans32Struct_t set_vel;	//ÉèÖÃµç»úËÙ¶È
-	formatTrans32Struct_t set_cur;	//ÉèÖÃµç»úµçÁ÷		
-	formatTrans32Struct_t vel_limit;	//ÉèÖÃµç»úËÙ¶ÈÏŞÖÆ
-	formatTrans32Struct_t current_limit; //ÉèÖÃµç»úµçÁ÷ÏŞÖÆ		
-	uint8_t set_vel_cur_limit_flag; //ÉèÖÃµç»úËÙ¶È/µçÁ÷ÏŞÖÆFlag
+	uint8_t	save_config_flag; //ä¿å­˜ç”µæœºå‚æ•°æ ‡å¿—ä½
+	uint8_t	clear_error_flag;	//æ¸…é™¤ç”µæœºé”™è¯¯æ ‡å¿—ä½
+	AxisStateStruct_t	set_motor_flag; //è®¾ç½®ç”µæœºçŠ¶æ€
+	ControlModeStruct_t control_mode;	//ç”µæœºæ§åˆ¶æ¨¡å¼	
+	formatTrans32Struct_t set_pos;	//è®¾ç½®ç”µæœºä½ç½®
+	formatTrans32Struct_t set_vel;	//è®¾ç½®ç”µæœºé€Ÿåº¦
+	formatTrans32Struct_t set_cur;	//è®¾ç½®ç”µæœºç”µæµ		
+	formatTrans32Struct_t vel_limit;	//è®¾ç½®ç”µæœºé€Ÿåº¦é™åˆ¶
+	formatTrans32Struct_t current_limit; //è®¾ç½®ç”µæœºç”µæµé™åˆ¶		
+	uint8_t set_vel_cur_limit_flag; //è®¾ç½®ç”µæœºé€Ÿåº¦/ç”µæµé™åˆ¶Flag
 	
 } controlStruct_t;	
 ////////////////////////////////////////////////////
