@@ -10,4 +10,4 @@ Please change the network settings and IP address according to your own configur
 
 We selected the FOC drive boards from this open-source design for the retraction mechanism: [FOC Drive Boards](https://oshwhub.com/a1804889557/xin-chun-kuai-le-ning-meng-FOCka).
 
-![image](https://github.com/qiaoqy/lasso_gripper/blob/main/img/overall_img.png){: width="50%" height="50%"}
+<img src="https://github.com/qiaoqy/lasso_gripper/blob/main/img/overall_img.png" alt="image" width="300">
