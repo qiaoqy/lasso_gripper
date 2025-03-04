@@ -6,11 +6,11 @@
 
 
 // WiFi network name and password:
-const char * networkName = "ViconWIFI";
-const char * networkPswd = "dontcrash";
+const char * networkName = "your_wifi_name";
+const char * networkPswd = "your_wifi_password";
 
 
-const char * udpAddress = "192.168.50.185";
+const char * udpAddress = "192.168.XX.XXX";
 const int udpPort = 3333;
 
 
